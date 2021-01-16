@@ -1,15 +1,34 @@
-## Put comments here that give an overall description of what your
-## functions do
+## referring to the example and instructions provided in this week's lesson,
+## i substituted makeCacheMatrix from makeVector and cachesolve instead of
+##cachemean; also wrote the formula from mean to inverse
 
-## Write a short comment describing this function
-
+## creates the matrix that gets its inverse cached
 makeCacheMatrix <- function(x = matrix()) {
-
+    i <- NULL
+  set <- function(y) {
+          x <<- y
+          i <<- NULL
+  }
+  get <- function() x
+  setinverse <- function(inverse) i <<- inverse
+  getinverse <- function() i
+  list(set = set,
+       get = get,
+       setinverse = setinverse,
+       getinverse = getinverse)
 }
 
 
-## Write a short comment describing this function
+## calculates for the inverse of the matrix above
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  i <- x$getinverse()
+  if (!is.null(i)) {
+          message("getting cached data")
+          return(i)
+  }
+  data <- x$get()
+  i <- solve(data, ...)
+  x$setinverse(i)
+  i
 }
